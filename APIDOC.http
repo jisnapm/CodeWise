@@ -1,0 +1,42 @@
+###
+GET http://127.0.0.1:8000/questions/
+Accept: application/json
+
+###
+POST http://127.0.0.1:8000/questions/
+Content-Type: application/json
+
+{
+    "title": "Prime Number",
+    "language": "python",
+    "difficulty_level": "easy",
+    "notes": "This question is about checking if a given number is prime.",
+    "sample_input": "5",
+    "sample_output": "prime",
+    "topic": "Loops",
+    "is_active": true
+}
+
+###
+GET http://127.0.0.1:8000/questions/2/
+Accept: application/json
+
+
+###
+PUT http://127.0.0.1:8000/questions/4/
+Content-Type: application/json
+
+{
+    "title": "Armstrong Number",
+    "language": "python",
+    "difficulty_level": "easy",
+    "notes": "This question is about checking if a given number is an Armstrong number.",
+    "sample_input": "153",
+    "sample_output": "armstrong",
+    "topic": "While Loop",
+    "is_active": true
+}
+
+###
+DELETE http://127.0.0.1:8000/questions/2/
+Accept: application/json
