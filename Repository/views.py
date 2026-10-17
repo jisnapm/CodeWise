@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from Repository.models import QuestionDb
-from Repository.serializers import QuestionSerializer
+from Repository.models import QuestionDb, SubmissionsDb
+from Repository.serializers import QuestionSerializer, SubmissionSerializer
 
 # Create your views here.
 
@@ -42,7 +42,25 @@ class QuestionRetrieveUpdateDeleteView(APIView):
         else:
             return Response(data = s_instance.errors)
 
-
     def delete(self, request, pk):
         QuestionDb.objects.filter(id=pk).delete()
         return Response(data = {"message": "Question deleted successfully!"})
+    
+class SubmissionsListCreateView(APIView):
+    def get(self, request):
+        qs = SubmissionsDb.objects.all()
+        submission_instance = SubmissionSerializer(qs, many= True)
+        return Response(data= submission_instance.data)
+
+    def post(self, request):
+        form_data = request.data
+        sub_instance = SubmissionSerializer(data=form_data)
+        if sub_instance.is_valid():
+            actual_data = sub_instance.validated_data
+            SubmissionsDb.objects.create(**actual_data)
+            return Response(data={"message": "Answers Submitted!"})
+        else:
+            return Response(data=sub_instance.errors)
+
+
+    

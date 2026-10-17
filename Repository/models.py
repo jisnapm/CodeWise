@@ -9,24 +9,29 @@ Fields : title, language, notes, difficulty_level, sample_input, sample_output,
 
 class QuestionDb(models.Model):
     title = models.CharField(max_length=200)
-
     LANGUAGE_CHOICES = (
         ("python", "Python"),
         ("java", "Java"),  
         ("javascript", "JavaScript"), 
     )
     language = models.CharField(max_length=20, choices=LANGUAGE_CHOICES, default="python")
-
     DIFFICULTY_CHOICES = (
         ("easy", "Easy"),
         ("medium", "Medium"),
         ("hard", "Hard"),
     )
     difficulty_level = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES, default="easy")
-
     notes = models.TextField()
     sample_input = models.TextField()
     sample_output = models.TextField()
     topic = models.CharField(max_length=100)
     published_date = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+
+class SubmissionsDb(models.Model):
+    question_id = models.IntegerField()
+    answer = models.TextField()
+    points = models.PositiveIntegerField(null= True)
+    owner = models.CharField()
+    submission_date = models.DateTimeField(auto_now_add= True)
+    remarks = models.TextField(null= True)

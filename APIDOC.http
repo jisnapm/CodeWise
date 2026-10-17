@@ -40,3 +40,17 @@ Content-Type: application/json
 ###
 DELETE http://127.0.0.1:8000/questions/2/
 Accept: application/json
+
+###
+GET http://127.0.0.1:8000/submissions/
+Accept: application/json
+
+###
+POST http://127.0.0.1:8000/submissions/
+Content-Type: application/json
+
+{
+    "question_id":"1",
+    "answer": "demo",
+    "owner":"Jisna"
+}
