@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from Repository.models import QuestionDb, SubmissionsDb
@@ -23,7 +23,6 @@ class QuestionListCreateView(APIView):
 
         else:
             return Response(data = {"errors": serializer_instance.errors})
-
 
 class QuestionRetrieveUpdateDeleteView(APIView):
     def get(self, request, pk):
@@ -62,5 +61,23 @@ class SubmissionsListCreateView(APIView):
         else:
             return Response(data=sub_instance.errors)
 
+class SubmissionsRetrieveUpdateDeleteView(APIView):
+    def get(self, request, pk):
+        # qs = SubmissionsDb.objects.get(id = pk)
+        qs = get_object_or_404(SubmissionsDb, id=pk)
+        s_instance = SubmissionSerializer(qs)
+        return Response(data= s_instance.data)
 
-    
+    def put(self, request, pk):
+        form_data = request.data
+        submission_instance = SubmissionSerializer(data= form_data)
+        if submission_instance.is_valid():
+            actual_data = submission_instance.validated_data
+            SubmissionsDb.objects.filter(id=pk).update(**actual_data)
+            return Response(data={"message":"submission updated!"})
+        else:
+            return Response(data=submission_instance.errors)
+
+    def delete(self, request, pk):
+        SubmissionsDb.objects.filter(id=pk).delete()
+        return Response(data={"message": "Submission deleted!"})

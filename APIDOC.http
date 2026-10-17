@@ -50,7 +50,25 @@ POST http://127.0.0.1:8000/submissions/
 Content-Type: application/json
 
 {
-    "question_id":"1",
+    "question_id":"2",
     "answer": "demo",
-    "owner":"Jisna"
+    "owner":"Anu"
 }
+
+###
+GET http://127.0.0.1:8000/submissions/2/
+Accept: application/json
+
+###
+PUT http://127.0.0.1:8000/submissions/2/
+Content-Type: application/json
+
+{
+    "question_id":"2",
+    "answer": "5 is a prime number",
+    "owner":"Anu"
+}
+
+###
+DELETE http://127.0.0.1:8000/submissions/2/
+Accept: application/json
